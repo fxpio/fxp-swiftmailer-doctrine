@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Sonatra\Bundle\SwiftmailerDoctrineBundle\Tests\Entity;
+namespace Sonatra\Component\SwiftmailerDoctrine\Tests\Entity;
 
-use Sonatra\Bundle\SwiftmailerDoctrineBundle\Model\Repository\SpoolEmailRepositoryInterface;
+use Sonatra\Component\SwiftmailerDoctrine\Model\Repository\SpoolEmailRepositoryInterface;
 
 /**
  * SpoolEmail Repository Tests.
@@ -23,7 +23,7 @@ class SpoolEmailRepositoryTest extends \PHPUnit_Framework_TestCase
     public function testFindEmailsToSend()
     {
         /* @var SpoolEmailRepositoryInterface|\PHPUnit_Framework_MockObject_MockObject $repo */
-        $repo = $this->getMockBuilder('Sonatra\Bundle\SwiftmailerDoctrineBundle\Entity\Repository\SpoolEmailRepository')
+        $repo = $this->getMockBuilder('Sonatra\Component\SwiftmailerDoctrine\Entity\Repository\SpoolEmailRepository')
             ->disableOriginalConstructor()
             ->setMethods(array('createQueryBuilder'))
             ->getMock()
@@ -65,7 +65,7 @@ class SpoolEmailRepositoryTest extends \PHPUnit_Framework_TestCase
     public function testRecover()
     {
         /* @var SpoolEmailRepositoryInterface|\PHPUnit_Framework_MockObject_MockObject $repo */
-        $repo = $this->getMockBuilder('Sonatra\Bundle\SwiftmailerDoctrineBundle\Entity\Repository\SpoolEmailRepository')
+        $repo = $this->getMockBuilder('Sonatra\Component\SwiftmailerDoctrine\Entity\Repository\SpoolEmailRepository')
             ->disableOriginalConstructor()
             ->setMethods(array('getEntityManager'))
             ->getMock()

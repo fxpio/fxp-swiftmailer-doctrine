@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Sonatra\Bundle\SwiftmailerDoctrineBundle\Exception;
+namespace Sonatra\Component\SwiftmailerDoctrine\Exception;
 
 /**
  * Base ExceptionInterface for the swiftmailer doctrine bundle.

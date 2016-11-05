@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Sonatra\Bundle\SwiftmailerDoctrineBundle\Entity;
+namespace Sonatra\Component\SwiftmailerDoctrine\Entity;
 
-use Sonatra\Bundle\SwiftmailerDoctrineBundle\Model\SpoolEmail as BaseSpoolEmail;
+use Sonatra\Component\SwiftmailerDoctrine\Model\SpoolEmail as BaseSpoolEmail;
 
 /**
  * Spool email entity.

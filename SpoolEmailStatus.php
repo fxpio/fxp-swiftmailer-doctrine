@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Sonatra\Bundle\SwiftmailerDoctrineBundle;
+namespace Sonatra\Component\SwiftmailerDoctrine;
 
 /**
  * @author François Pluchino <francois.pluchino@sonatra.com>

@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Sonatra\Bundle\SwiftmailerDoctrineBundle\Model\Repository;
+namespace Sonatra\Component\SwiftmailerDoctrine\Model\Repository;
 
 use Doctrine\Common\Collections\Selectable;
 use Doctrine\Common\Persistence\ObjectRepository;
-use Sonatra\Bundle\SwiftmailerDoctrineBundle\Model\SpoolEmailInterface;
+use Sonatra\Component\SwiftmailerDoctrine\Model\SpoolEmailInterface;
 
 /**
  * Spool email repository interface.

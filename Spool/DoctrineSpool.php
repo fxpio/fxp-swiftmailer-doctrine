@@ -9,22 +9,22 @@
  * file that was distributed with this source code.
  */
 
-namespace Sonatra\Bundle\SwiftmailerDoctrineBundle\Spool;
+namespace Sonatra\Component\SwiftmailerDoctrine\Spool;
 
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
-use Sonatra\Bundle\SwiftmailerDoctrineBundle\Exception\InvalidArgumentException;
-use Sonatra\Bundle\SwiftmailerDoctrineBundle\Model\Repository\SpoolEmailRepositoryInterface;
-use Sonatra\Bundle\SwiftmailerDoctrineBundle\Model\SpoolEmailInterface;
-use Sonatra\Bundle\SwiftmailerDoctrineBundle\SpoolEmailStatus;
+use Sonatra\Component\SwiftmailerDoctrine\Exception\InvalidArgumentException;
+use Sonatra\Component\SwiftmailerDoctrine\Model\Repository\SpoolEmailRepositoryInterface;
+use Sonatra\Component\SwiftmailerDoctrine\Model\SpoolEmailInterface;
+use Sonatra\Component\SwiftmailerDoctrine\SpoolEmailStatus;
 use Swift_Transport;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * Doctrine ORM Spool for Swiftmailer.
+ * Doctrine Spool for Swiftmailer.
  *
  * @author François Pluchino <francois.pluchino@sonatra.com>
  */
-class DoctrineOrmSpool extends \Swift_ConfigurableSpool
+class DoctrineSpool extends \Swift_ConfigurableSpool
 {
     /**
      * @var ObjectManager
@@ -49,15 +49,15 @@ class DoctrineOrmSpool extends \Swift_ConfigurableSpool
     /**
      * Constructor.
      *
-     * @param RegistryInterface $registry The doctrine registry
-     * @param string            $class    The class name of spool email entity
+     * @param ManagerRegistry $registry The doctrine registry
+     * @param string          $class    The class name of spool email entity
      *
-     * @throws InvalidArgumentException When the class has not the interface Sonatra\Bundle\SwiftmailerDoctrineBundle\Model\SpoolEmailInterface
-     * @throws InvalidArgumentException When the repository is not an instance of Sonatra\Bundle\SwiftmailerDoctrineBundle\Model\Repository\SpoolEmailRepositoryInterface
+     * @throws InvalidArgumentException When the class has not the interface Sonatra\Component\SwiftmailerDoctrine\Model\SpoolEmailInterface
+     * @throws InvalidArgumentException When the repository is not an instance of Sonatra\Component\SwiftmailerDoctrine\Model\Repository\SpoolEmailRepositoryInterface
      */
-    public function __construct(RegistryInterface $registry, $class)
+    public function __construct(ManagerRegistry $registry, $class)
     {
-        $validClass = 'Sonatra\Bundle\SwiftmailerDoctrineBundle\Model\SpoolEmailInterface';
+        $validClass = 'Sonatra\Component\SwiftmailerDoctrine\Model\SpoolEmailInterface';
         $ref = new \ReflectionClass($class);
 
         if (!in_array($validClass, $ref->getInterfaceNames())) {
@@ -70,7 +70,7 @@ class DoctrineOrmSpool extends \Swift_ConfigurableSpool
         $this->class = $class;
 
         if (!$this->repo instanceof SpoolEmailRepositoryInterface) {
-            $msg = sprintf('The repository of "%s" must be an instance of "%s"', $class, 'Sonatra\Bundle\SwiftmailerDoctrineBundle\Model\Repository\SpoolEmailRepositoryInterface');
+            $msg = sprintf('The repository of "%s" must be an instance of "%s"', $class, 'Sonatra\Component\SwiftmailerDoctrine\Model\Repository\SpoolEmailRepositoryInterface');
             throw new InvalidArgumentException($msg);
         }
     }

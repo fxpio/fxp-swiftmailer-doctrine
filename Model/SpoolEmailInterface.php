@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Sonatra\Bundle\SwiftmailerDoctrineBundle\Model;
+namespace Sonatra\Component\SwiftmailerDoctrine\Model;
 
 /**
  * Spool email interface.
@@ -60,7 +60,7 @@ interface SpoolEmailInterface
     /**
      * Set the status.
      *
-     * Defined by constants in Sonatra\Bundle\SwiftmailerDoctrineBundle\SpoolEmailStatus.
+     * Defined by constants in Sonatra\Component\SwiftmailerDoctrine\SpoolEmailStatus.
      *
      * @param int $status The status
      *
@@ -71,7 +71,7 @@ interface SpoolEmailInterface
     /**
      * Get the status.
      *
-     * Defined by constants in Sonatra\Bundle\SwiftmailerDoctrineBundle\SpoolEmailStatus.
+     * Defined by constants in Sonatra\Component\SwiftmailerDoctrine\SpoolEmailStatus.
      *
      * @return int
      */

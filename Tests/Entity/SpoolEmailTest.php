@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Sonatra\Bundle\SwiftmailerDoctrineBundle\Tests\Entity;
+namespace Sonatra\Component\SwiftmailerDoctrine\Tests\Entity;
 
-use Sonatra\Bundle\SwiftmailerDoctrineBundle\Entity\SpoolEmail;
-use Sonatra\Bundle\SwiftmailerDoctrineBundle\SpoolEmailStatus;
+use Sonatra\Component\SwiftmailerDoctrine\Entity\SpoolEmail;
+use Sonatra\Component\SwiftmailerDoctrine\SpoolEmailStatus;
 
 /**
  * SpoolEmail Entity Tests.

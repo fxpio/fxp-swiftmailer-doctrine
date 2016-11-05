@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Sonatra\Bundle\SwiftmailerDoctrineBundle\Entity\Repository;
+namespace Sonatra\Component\SwiftmailerDoctrine\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Sonatra\Bundle\SwiftmailerDoctrineBundle\Model\Repository\SpoolEmailRepositoryInterface;
-use Sonatra\Bundle\SwiftmailerDoctrineBundle\SpoolEmailStatus;
+use Sonatra\Component\SwiftmailerDoctrine\Model\Repository\SpoolEmailRepositoryInterface;
+use Sonatra\Component\SwiftmailerDoctrine\SpoolEmailStatus;
 
 /**
  * Spool email entity repository.
