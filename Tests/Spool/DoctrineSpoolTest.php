@@ -71,8 +71,8 @@ class DoctrineSpoolTest extends \PHPUnit_Framework_TestCase
 
     public function testQueueMessage()
     {
-        /* @var \Swift_Mime_Message $message */
-        $message = $this->getMockBuilder('Swift_Mime_Message')
+        /* @var \Swift_Mime_SimpleMessage $message */
+        $message = $this->getMockBuilder('Swift_Mime_SimpleMessage')
             ->disableOriginalConstructor()
             ->getMock()
         ;
@@ -101,8 +101,8 @@ class DoctrineSpoolTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock()
         ;
-        /* @var \Swift_Mime_Message $message */
-        $message = $this->getMockBuilder('Swift_Mime_Message')->disableOriginalConstructor()->getMock();
+        /* @var \Swift_Mime_SimpleMessage $message */
+        $message = $this->getMockBuilder('Swift_Mime_SimpleMessage')->disableOriginalConstructor()->getMock();
         $email = new SpoolEmail($message);
 
         $this->assertSame(SpoolEmailStatus::STATUS_WAITING, $email->getStatus());
@@ -124,8 +124,8 @@ class DoctrineSpoolTest extends \PHPUnit_Framework_TestCase
             ->method('send')
             ->will($this->throwException(new \Swift_TransportException('Message exception')));
 
-        /* @var \Swift_Mime_Message $message */
-        $message = $this->getMockBuilder('Swift_Mime_Message')->disableOriginalConstructor()->getMock();
+        /* @var \Swift_Mime_SimpleMessage $message */
+        $message = $this->getMockBuilder('Swift_Mime_SimpleMessage')->disableOriginalConstructor()->getMock();
         $email = new SpoolEmail($message);
 
         $this->assertSame(SpoolEmailStatus::STATUS_WAITING, $email->getStatus());
@@ -147,8 +147,8 @@ class DoctrineSpoolTest extends \PHPUnit_Framework_TestCase
             ->method('send')
             ->will($this->returnValue(1));
 
-        /* @var \Swift_Mime_Message $message */
-        $message = $this->getMockBuilder('Swift_Mime_Message')->disableOriginalConstructor()->getMock();
+        /* @var \Swift_Mime_SimpleMessage $message */
+        $message = $this->getMockBuilder('Swift_Mime_SimpleMessage')->disableOriginalConstructor()->getMock();
         $email = new SpoolEmail($message);
 
         $this->assertSame(SpoolEmailStatus::STATUS_WAITING, $email->getStatus());
@@ -174,11 +174,11 @@ class DoctrineSpoolTest extends \PHPUnit_Framework_TestCase
                 return 1;
             }));
 
-        /* @var \Swift_Mime_Message $message1 */
-        $message1 = $this->getMockBuilder('Swift_Mime_Message')->disableOriginalConstructor()->getMock();
+        /* @var \Swift_Mime_SimpleMessage $message1 */
+        $message1 = $this->getMockBuilder('Swift_Mime_SimpleMessage')->disableOriginalConstructor()->getMock();
         $email1 = new SpoolEmail($message1);
-        /* @var \Swift_Mime_Message $message2 */
-        $message2 = $this->getMockBuilder('Swift_Mime_Message')->disableOriginalConstructor()->getMock();
+        /* @var \Swift_Mime_SimpleMessage $message2 */
+        $message2 = $this->getMockBuilder('Swift_Mime_SimpleMessage')->disableOriginalConstructor()->getMock();
         $email2 = new SpoolEmail($message2);
 
         $spool = $this->createSpool(array($email1, $email2));

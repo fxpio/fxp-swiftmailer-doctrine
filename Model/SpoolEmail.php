@@ -48,9 +48,9 @@ abstract class SpoolEmail implements SpoolEmailInterface
     /**
      * Constructor.
      *
-     * @param \Swift_Mime_Message $message The swift message
+     * @param \Swift_Mime_SimpleMessage $message The swift message
      */
-    public function __construct(\Swift_Mime_Message $message)
+    public function __construct(\Swift_Mime_SimpleMessage $message)
     {
         $this->setMessage($message);
         $this->status = SpoolEmailStatus::STATUS_WAITING;
@@ -67,7 +67,7 @@ abstract class SpoolEmail implements SpoolEmailInterface
     /**
      * {@inheritdoc}
      */
-    public function setMessage(\Swift_Mime_Message $message)
+    public function setMessage(\Swift_Mime_SimpleMessage $message)
     {
         $this->message = base64_encode(serialize($message));
 

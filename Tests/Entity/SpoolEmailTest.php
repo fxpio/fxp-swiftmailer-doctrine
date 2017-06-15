@@ -58,11 +58,11 @@ class SpoolEmailTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Swift_Mime_Message|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Swift_Mime_SimpleMessage|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function createSwiftMessage()
     {
-        $message = $this->getMockBuilder('Swift_Mime_Message')
+        $message = $this->getMockBuilder('Swift_Mime_SimpleMessage')
             ->disableOriginalConstructor()
             ->getMock()
         ;

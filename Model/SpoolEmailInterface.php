@@ -28,16 +28,16 @@ interface SpoolEmailInterface
     /**
      * Set the swiftmailer message.
      *
-     * @param \Swift_Mime_Message $message
+     * @param \Swift_Mime_SimpleMessage $message
      *
      * @return self
      */
-    public function setMessage(\Swift_Mime_Message $message);
+    public function setMessage(\Swift_Mime_SimpleMessage $message);
 
     /**
      * Get the swiftmailer message.
      *
-     * @return \Swift_Mime_Message
+     * @return \Swift_Mime_SimpleMessage
      */
     public function getMessage();
 

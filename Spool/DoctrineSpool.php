@@ -102,7 +102,7 @@ class DoctrineSpool extends \Swift_ConfigurableSpool
     /**
      * {@inheritdoc}
      */
-    public function queueMessage(\Swift_Mime_Message $message)
+    public function queueMessage(\Swift_Mime_SimpleMessage $message)
     {
         $entity = new $this->class($message);
         $this->om->persist($entity);
