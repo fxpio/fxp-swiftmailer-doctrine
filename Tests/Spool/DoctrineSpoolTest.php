@@ -12,6 +12,7 @@
 namespace Sonatra\Component\SwiftmailerDoctrine\Tests\DependencyInjection;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
+use PHPUnit\Framework\TestCase;
 use Sonatra\Component\SwiftmailerDoctrine\Entity\SpoolEmail;
 use Sonatra\Component\SwiftmailerDoctrine\Spool\DoctrineSpool;
 use Sonatra\Component\SwiftmailerDoctrine\SpoolEmailStatus;
@@ -21,7 +22,7 @@ use Sonatra\Component\SwiftmailerDoctrine\SpoolEmailStatus;
  *
  * @author François Pluchino <francois.pluchino@sonatra.com>
  */
-class DoctrineSpoolTest extends \PHPUnit_Framework_TestCase
+class DoctrineSpoolTest extends TestCase
 {
     /**
      * @expectedException \Sonatra\Component\SwiftmailerDoctrine\Exception\InvalidArgumentException
@@ -197,7 +198,10 @@ class DoctrineSpoolTest extends \PHPUnit_Framework_TestCase
 
     public function testRecover()
     {
-        $this->createSpool()->recover(900);
+        $spool = $this->createSpool();
+        $spool->recover(900);
+
+        $this->assertFalse($spool->isStarted());
     }
 
     /**

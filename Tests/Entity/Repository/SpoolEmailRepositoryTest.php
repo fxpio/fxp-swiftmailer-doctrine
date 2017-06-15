@@ -11,6 +11,7 @@
 
 namespace Sonatra\Component\SwiftmailerDoctrine\Tests\Entity;
 
+use PHPUnit\Framework\TestCase;
 use Sonatra\Component\SwiftmailerDoctrine\Model\Repository\SpoolEmailRepositoryInterface;
 
 /**
@@ -18,7 +19,7 @@ use Sonatra\Component\SwiftmailerDoctrine\Model\Repository\SpoolEmailRepositoryI
  *
  * @author François Pluchino <francois.pluchino@sonatra.com>
  */
-class SpoolEmailRepositoryTest extends \PHPUnit_Framework_TestCase
+class SpoolEmailRepositoryTest extends TestCase
 {
     public function testFindEmailsToSend()
     {
@@ -67,7 +68,7 @@ class SpoolEmailRepositoryTest extends \PHPUnit_Framework_TestCase
         /* @var SpoolEmailRepositoryInterface|\PHPUnit_Framework_MockObject_MockObject $repo */
         $repo = $this->getMockBuilder('Sonatra\Component\SwiftmailerDoctrine\Entity\Repository\SpoolEmailRepository')
             ->disableOriginalConstructor()
-            ->setMethods(array('getEntityManager'))
+            ->setMethods(array('getEntityManager', 'createQueryBuilder'))
             ->getMock()
         ;
 
@@ -88,6 +89,38 @@ class SpoolEmailRepositoryTest extends \PHPUnit_Framework_TestCase
             ->method('getEntityManager')
             ->will($this->returnValue($em));
 
+        $q = $this->getMockBuilder('\Doctrine\ORM\AbstractQuery')
+            ->setMethods(array('setParameter', 'getResult'))
+            ->disableOriginalConstructor()
+            ->getMockForAbstractClass();
+        $q->expects($this->any())
+            ->method('getResult')
+            ->will($this->returnValue(array()));
+
+        $qb = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+        $qb->expects($this->any())
+            ->method('where')
+            ->will($this->returnSelf());
+        $qb->expects($this->any())
+            ->method('orderBy')
+            ->will($this->returnSelf());
+        $qb->expects($this->any())
+            ->method('setParameter')
+            ->will($this->returnSelf());
+        $qb->expects($this->any())
+            ->method('getQuery')
+            ->will($this->returnValue($q));
+
+        $repo->expects($this->any())
+            ->method('createQueryBuilder')
+            ->will($this->returnValue($qb))
+        ;
+
         $repo->recover(900);
+
+        $this->assertSame(array(), $repo->findEmailsToSend(1));
     }
 }

@@ -11,6 +11,7 @@
 
 namespace Sonatra\Component\SwiftmailerDoctrine\Tests\Entity;
 
+use PHPUnit\Framework\TestCase;
 use Sonatra\Component\SwiftmailerDoctrine\Entity\SpoolEmail;
 use Sonatra\Component\SwiftmailerDoctrine\SpoolEmailStatus;
 
@@ -19,7 +20,7 @@ use Sonatra\Component\SwiftmailerDoctrine\SpoolEmailStatus;
  *
  * @author François Pluchino <francois.pluchino@sonatra.com>
  */
-class SpoolEmailTest extends \PHPUnit_Framework_TestCase
+class SpoolEmailTest extends TestCase
 {
     public function testDefaultValue()
     {
