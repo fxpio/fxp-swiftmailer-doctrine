@@ -14,9 +14,9 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=5.6.0",
-        "swiftmailer/swiftmailer": "^5.4.0",
-        "doctrine/common": "^2.6.0"
+        "php": ">=7.0.0",
+        "swiftmailer/swiftmailer": "^6.0.0",
+        "doctrine/common": "^2.7.0"
     },
     "require-dev": {
         "doctrine/orm": "^2.5.0"
