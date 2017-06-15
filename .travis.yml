@@ -10,7 +10,6 @@ matrix:
     include:
         - php: 7.0
         - php: 7.1
-        - php: hhvm
         - php: nightly
 
     allow_failures:
@@ -29,7 +28,7 @@ script:
 
 after_script:
     - 'echo ''coverage_clover: build/logs/clover.xml'' >> ./.coveralls.yml'
-    - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ] && [ "$TRAVIS_PHP_VERSION" != "nightly" ]; then php ~/.composer/vendor/bin/coveralls -v; fi;'
+    - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "nightly" ]; then php ~/.composer/vendor/bin/coveralls -v; fi;'
 
 notifications:
     email: false
