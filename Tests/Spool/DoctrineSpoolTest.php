@@ -83,7 +83,7 @@ class DoctrineSpoolTest extends TestCase
 
     public function testFlushQueueEmpty()
     {
-        $failedRecipients = array();
+        $failedRecipients = [];
         /* @var \Swift_Transport|\PHPUnit_Framework_MockObject_MockObject $transport */
         $transport = $this->getMockBuilder('Swift_Transport')
             ->disableOriginalConstructor()
@@ -96,7 +96,7 @@ class DoctrineSpoolTest extends TestCase
 
     public function testFlushQueueFailed()
     {
-        $failedRecipients = array();
+        $failedRecipients = [];
         /* @var \Swift_Transport|\PHPUnit_Framework_MockObject_MockObject $transport */
         $transport = $this->getMockBuilder('Swift_Transport')
             ->disableOriginalConstructor()
@@ -107,7 +107,7 @@ class DoctrineSpoolTest extends TestCase
         $email = new SpoolEmail($message);
 
         $this->assertSame(SpoolEmailStatus::STATUS_WAITING, $email->getStatus());
-        $this->assertEquals(0, $this->createSpool(array($email))->flushQueue($transport, $failedRecipients));
+        $this->assertEquals(0, $this->createSpool([$email])->flushQueue($transport, $failedRecipients));
         $this->assertCount(0, $failedRecipients);
         $this->assertSame(SpoolEmailStatus::STATUS_FAILED, $email->getStatus());
         $this->assertNull($email->getStatusMessage());
@@ -115,7 +115,7 @@ class DoctrineSpoolTest extends TestCase
 
     public function testFlushQueueFailedException()
     {
-        $failedRecipients = array();
+        $failedRecipients = [];
         /* @var \Swift_Transport|\PHPUnit_Framework_MockObject_MockObject $transport */
         $transport = $this->getMockBuilder('Swift_Transport')
             ->disableOriginalConstructor()
@@ -130,7 +130,7 @@ class DoctrineSpoolTest extends TestCase
         $email = new SpoolEmail($message);
 
         $this->assertSame(SpoolEmailStatus::STATUS_WAITING, $email->getStatus());
-        $this->assertEquals(0, $this->createSpool(array($email))->flushQueue($transport, $failedRecipients));
+        $this->assertEquals(0, $this->createSpool([$email])->flushQueue($transport, $failedRecipients));
         $this->assertCount(0, $failedRecipients);
         $this->assertSame(SpoolEmailStatus::STATUS_FAILED, $email->getStatus());
         $this->assertSame('Message exception', $email->getStatusMessage());
@@ -138,7 +138,7 @@ class DoctrineSpoolTest extends TestCase
 
     public function testFlushQueueSuccess()
     {
-        $failedRecipients = array();
+        $failedRecipients = [];
         /* @var \Swift_Transport|\PHPUnit_Framework_MockObject_MockObject $transport */
         $transport = $this->getMockBuilder('Swift_Transport')
             ->disableOriginalConstructor()
@@ -153,7 +153,7 @@ class DoctrineSpoolTest extends TestCase
         $email = new SpoolEmail($message);
 
         $this->assertSame(SpoolEmailStatus::STATUS_WAITING, $email->getStatus());
-        $this->assertEquals(1, $this->createSpool(array($email))->flushQueue($transport, $failedRecipients));
+        $this->assertEquals(1, $this->createSpool([$email])->flushQueue($transport, $failedRecipients));
         $this->assertCount(0, $failedRecipients);
         $this->assertSame(SpoolEmailStatus::STATUS_SUCCESS, $email->getStatus());
         $this->assertNull($email->getStatusMessage());
@@ -161,7 +161,7 @@ class DoctrineSpoolTest extends TestCase
 
     public function testFlushQueueTimeout()
     {
-        $failedRecipients = array();
+        $failedRecipients = [];
         /* @var \Swift_Transport|\PHPUnit_Framework_MockObject_MockObject $transport */
         $transport = $this->getMockBuilder('Swift_Transport')
             ->disableOriginalConstructor()
@@ -182,7 +182,7 @@ class DoctrineSpoolTest extends TestCase
         $message2 = $this->getMockBuilder('Swift_Mime_SimpleMessage')->disableOriginalConstructor()->getMock();
         $email2 = new SpoolEmail($message2);
 
-        $spool = $this->createSpool(array($email1, $email2));
+        $spool = $this->createSpool([$email1, $email2]);
         $spool->setTimeLimit(1);
 
         $this->assertSame(SpoolEmailStatus::STATUS_WAITING, $email1->getStatus());
@@ -209,7 +209,7 @@ class DoctrineSpoolTest extends TestCase
      *
      * @return DoctrineSpool
      */
-    protected function createSpool($emailsToSend = array())
+    protected function createSpool($emailsToSend = [])
     {
         $repo = $this->getMockBuilder('Fxp\Component\SwiftmailerDoctrine\Model\Repository\SpoolEmailRepositoryInterface')->getMock();
         $repo->expects($this->any())

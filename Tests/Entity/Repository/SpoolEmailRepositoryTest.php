@@ -26,17 +26,17 @@ class SpoolEmailRepositoryTest extends TestCase
         /* @var SpoolEmailRepositoryInterface|\PHPUnit_Framework_MockObject_MockObject $repo */
         $repo = $this->getMockBuilder('Fxp\Component\SwiftmailerDoctrine\Entity\Repository\SpoolEmailRepository')
             ->disableOriginalConstructor()
-            ->setMethods(array('createQueryBuilder'))
+            ->setMethods(['createQueryBuilder'])
             ->getMock()
         ;
 
         $q = $this->getMockBuilder('\Doctrine\ORM\AbstractQuery')
-            ->setMethods(array('setParameter', 'getResult'))
+            ->setMethods(['setParameter', 'getResult'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
         $q->expects($this->any())
             ->method('getResult')
-            ->will($this->returnValue(array()));
+            ->will($this->returnValue([]));
 
         $qb = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')
             ->disableOriginalConstructor()
@@ -60,7 +60,7 @@ class SpoolEmailRepositoryTest extends TestCase
             ->will($this->returnValue($qb))
         ;
 
-        $this->assertSame(array(), $repo->findEmailsToSend(1));
+        $this->assertSame([], $repo->findEmailsToSend(1));
     }
 
     public function testRecover()
@@ -68,12 +68,12 @@ class SpoolEmailRepositoryTest extends TestCase
         /* @var SpoolEmailRepositoryInterface|\PHPUnit_Framework_MockObject_MockObject $repo */
         $repo = $this->getMockBuilder('Fxp\Component\SwiftmailerDoctrine\Entity\Repository\SpoolEmailRepository')
             ->disableOriginalConstructor()
-            ->setMethods(array('getEntityManager', 'createQueryBuilder'))
+            ->setMethods(['getEntityManager', 'createQueryBuilder'])
             ->getMock()
         ;
 
         $q = $this->getMockBuilder('\Doctrine\ORM\AbstractQuery')
-            ->setMethods(array('setParameter', 'execute'))
+            ->setMethods(['setParameter', 'execute'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
         $q->expects($this->any())
@@ -90,12 +90,12 @@ class SpoolEmailRepositoryTest extends TestCase
             ->will($this->returnValue($em));
 
         $q = $this->getMockBuilder('\Doctrine\ORM\AbstractQuery')
-            ->setMethods(array('setParameter', 'getResult'))
+            ->setMethods(['setParameter', 'getResult'])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
         $q->expects($this->any())
             ->method('getResult')
-            ->will($this->returnValue(array()));
+            ->will($this->returnValue([]));
 
         $qb = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')
             ->disableOriginalConstructor()
@@ -121,6 +121,6 @@ class SpoolEmailRepositoryTest extends TestCase
 
         $repo->recover(900);
 
-        $this->assertSame(array(), $repo->findEmailsToSend(1));
+        $this->assertSame([], $repo->findEmailsToSend(1));
     }
 }
