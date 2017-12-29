@@ -1,28 +1,28 @@
 <?php
 
 /*
- * This file is part of the Sonatra package.
+ * This file is part of the Fxp package.
  *
- * (c) François Pluchino <francois.pluchino@sonatra.com>
+ * (c) François Pluchino <francois.pluchino@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Sonatra\Component\SwiftmailerDoctrine\Spool;
+namespace Fxp\Component\SwiftmailerDoctrine\Spool;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectManager;
-use Sonatra\Component\SwiftmailerDoctrine\Exception\InvalidArgumentException;
-use Sonatra\Component\SwiftmailerDoctrine\Model\Repository\SpoolEmailRepositoryInterface;
-use Sonatra\Component\SwiftmailerDoctrine\Model\SpoolEmailInterface;
-use Sonatra\Component\SwiftmailerDoctrine\SpoolEmailStatus;
+use Fxp\Component\SwiftmailerDoctrine\Exception\InvalidArgumentException;
+use Fxp\Component\SwiftmailerDoctrine\Model\Repository\SpoolEmailRepositoryInterface;
+use Fxp\Component\SwiftmailerDoctrine\Model\SpoolEmailInterface;
+use Fxp\Component\SwiftmailerDoctrine\SpoolEmailStatus;
 use Swift_Transport;
 
 /**
  * Doctrine Spool for Swiftmailer.
  *
- * @author François Pluchino <francois.pluchino@sonatra.com>
+ * @author François Pluchino <francois.pluchino@gmail.com>
  */
 class DoctrineSpool extends \Swift_ConfigurableSpool
 {
@@ -52,12 +52,12 @@ class DoctrineSpool extends \Swift_ConfigurableSpool
      * @param ManagerRegistry $registry The doctrine registry
      * @param string          $class    The class name of spool email entity
      *
-     * @throws InvalidArgumentException When the class has not the interface Sonatra\Component\SwiftmailerDoctrine\Model\SpoolEmailInterface
-     * @throws InvalidArgumentException When the repository is not an instance of Sonatra\Component\SwiftmailerDoctrine\Model\Repository\SpoolEmailRepositoryInterface
+     * @throws InvalidArgumentException When the class has not the interface Fxp\Component\SwiftmailerDoctrine\Model\SpoolEmailInterface
+     * @throws InvalidArgumentException When the repository is not an instance of Fxp\Component\SwiftmailerDoctrine\Model\Repository\SpoolEmailRepositoryInterface
      */
     public function __construct(ManagerRegistry $registry, $class)
     {
-        $validClass = 'Sonatra\Component\SwiftmailerDoctrine\Model\SpoolEmailInterface';
+        $validClass = 'Fxp\Component\SwiftmailerDoctrine\Model\SpoolEmailInterface';
         $ref = new \ReflectionClass($class);
 
         if (!in_array($validClass, $ref->getInterfaceNames())) {
@@ -70,7 +70,7 @@ class DoctrineSpool extends \Swift_ConfigurableSpool
         $this->class = $class;
 
         if (!$this->repo instanceof SpoolEmailRepositoryInterface) {
-            $msg = sprintf('The repository of "%s" must be an instance of "%s"', $class, 'Sonatra\Component\SwiftmailerDoctrine\Model\Repository\SpoolEmailRepositoryInterface');
+            $msg = sprintf('The repository of "%s" must be an instance of "%s"', $class, 'Fxp\Component\SwiftmailerDoctrine\Model\Repository\SpoolEmailRepositoryInterface');
             throw new InvalidArgumentException($msg);
         }
     }

@@ -1,20 +1,20 @@
 <?php
 
 /*
- * This file is part of the Sonatra package.
+ * This file is part of the Fxp package.
  *
- * (c) François Pluchino <francois.pluchino@sonatra.com>
+ * (c) François Pluchino <francois.pluchino@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Sonatra\Component\SwiftmailerDoctrine\Model;
+namespace Fxp\Component\SwiftmailerDoctrine\Model;
 
 /**
  * Spool email interface.
  *
- * @author François Pluchino <francois.pluchino@sonatra.com>
+ * @author François Pluchino <francois.pluchino@gmail.com>
  */
 interface SpoolEmailInterface
 {
@@ -60,7 +60,7 @@ interface SpoolEmailInterface
     /**
      * Set the status.
      *
-     * Defined by constants in Sonatra\Component\SwiftmailerDoctrine\SpoolEmailStatus.
+     * Defined by constants in Fxp\Component\SwiftmailerDoctrine\SpoolEmailStatus.
      *
      * @param int $status The status
      *
@@ -71,7 +71,7 @@ interface SpoolEmailInterface
     /**
      * Get the status.
      *
-     * Defined by constants in Sonatra\Component\SwiftmailerDoctrine\SpoolEmailStatus.
+     * Defined by constants in Fxp\Component\SwiftmailerDoctrine\SpoolEmailStatus.
      *
      * @return int
      */

@@ -1,24 +1,24 @@
 <?php
 
 /*
- * This file is part of the Sonatra package.
+ * This file is part of the Fxp package.
  *
- * (c) François Pluchino <francois.pluchino@sonatra.com>
+ * (c) François Pluchino <francois.pluchino@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Sonatra\Component\SwiftmailerDoctrine\Tests\Entity;
+namespace Fxp\Component\SwiftmailerDoctrine\Tests\Entity;
 
+use Fxp\Component\SwiftmailerDoctrine\Entity\SpoolEmail;
+use Fxp\Component\SwiftmailerDoctrine\SpoolEmailStatus;
 use PHPUnit\Framework\TestCase;
-use Sonatra\Component\SwiftmailerDoctrine\Entity\SpoolEmail;
-use Sonatra\Component\SwiftmailerDoctrine\SpoolEmailStatus;
 
 /**
  * SpoolEmail Entity Tests.
  *
- * @author François Pluchino <francois.pluchino@sonatra.com>
+ * @author François Pluchino <francois.pluchino@gmail.com>
  */
 class SpoolEmailTest extends TestCase
 {

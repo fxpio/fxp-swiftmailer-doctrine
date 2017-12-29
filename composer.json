@@ -1,14 +1,14 @@
 {
-    "name": "sonatra/swiftmailer-doctrine",
+    "name": "fxp/swiftmailer-doctrine",
     "type": "library",
     "description": "Doctrine model spool for Swiftmailer",
     "keywords": ["swiftmailer", "spool", "doctrine"],
-    "homepage": "https://github.com/sonatra/sonatra-swiftmailer-doctrine",
+    "homepage": "https://github.com/fxpio/fxp-swiftmailer-doctrine",
     "license": "MIT",
     "authors": [
         {
             "name": "François Pluchino",
-            "email": "francois.pluchino@sonatra.com"
+            "email": "francois.pluchino@gmail.com"
         }
     ],
     "minimum-stability": "dev",
@@ -22,7 +22,7 @@
         "doctrine/orm": "^2.6.0"
     },
     "autoload": {
-        "psr-4": { "Sonatra\\Component\\SwiftmailerDoctrine\\": "" },
+        "psr-4": { "Fxp\\Component\\SwiftmailerDoctrine\\": "" },
         "exclude-from-classmap": [
             "/Tests/"
         ]

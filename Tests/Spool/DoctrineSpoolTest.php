@@ -1,32 +1,32 @@
 <?php
 
 /*
- * This file is part of the Sonatra package.
+ * This file is part of the Fxp package.
  *
- * (c) François Pluchino <francois.pluchino@sonatra.com>
+ * (c) François Pluchino <francois.pluchino@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Sonatra\Component\SwiftmailerDoctrine\Tests\DependencyInjection;
+namespace Fxp\Component\SwiftmailerDoctrine\Tests\DependencyInjection;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Fxp\Component\SwiftmailerDoctrine\Entity\SpoolEmail;
+use Fxp\Component\SwiftmailerDoctrine\Spool\DoctrineSpool;
+use Fxp\Component\SwiftmailerDoctrine\SpoolEmailStatus;
 use PHPUnit\Framework\TestCase;
-use Sonatra\Component\SwiftmailerDoctrine\Entity\SpoolEmail;
-use Sonatra\Component\SwiftmailerDoctrine\Spool\DoctrineSpool;
-use Sonatra\Component\SwiftmailerDoctrine\SpoolEmailStatus;
 
 /**
  * Doctrine ORM Spool Tests.
  *
- * @author François Pluchino <francois.pluchino@sonatra.com>
+ * @author François Pluchino <francois.pluchino@gmail.com>
  */
 class DoctrineSpoolTest extends TestCase
 {
     /**
-     * @expectedException \Sonatra\Component\SwiftmailerDoctrine\Exception\InvalidArgumentException
-     * @expectedExceptionMessage The "stdClass" class does not extend "Sonatra\Component\SwiftmailerDoctrine\Model\SpoolEmailInterface
+     * @expectedException \Fxp\Component\SwiftmailerDoctrine\Exception\InvalidArgumentException
+     * @expectedExceptionMessage The "stdClass" class does not extend "Fxp\Component\SwiftmailerDoctrine\Model\SpoolEmailInterface
      */
     public function testInvalidClass()
     {
@@ -37,8 +37,8 @@ class DoctrineSpoolTest extends TestCase
     }
 
     /**
-     * @expectedException \Sonatra\Component\SwiftmailerDoctrine\Exception\InvalidArgumentException
-     * @expectedExceptionMessage The repository of "Sonatra\Component\SwiftmailerDoctrine\Entity\SpoolEmail" must be an instance of "Sonatra\Component\SwiftmailerDoctrine\Model\Repository\SpoolEmailRepositoryInterface"
+     * @expectedException \Fxp\Component\SwiftmailerDoctrine\Exception\InvalidArgumentException
+     * @expectedExceptionMessage The repository of "Fxp\Component\SwiftmailerDoctrine\Entity\SpoolEmail" must be an instance of "Fxp\Component\SwiftmailerDoctrine\Model\Repository\SpoolEmailRepositoryInterface"
      */
     public function testInvalidRepository()
     {
@@ -55,7 +55,7 @@ class DoctrineSpoolTest extends TestCase
             ->will($this->returnValue($manager))
         ;
 
-        new DoctrineSpool($registry, 'Sonatra\Component\SwiftmailerDoctrine\Entity\SpoolEmail');
+        new DoctrineSpool($registry, 'Fxp\Component\SwiftmailerDoctrine\Entity\SpoolEmail');
     }
 
     public function testBasic()
@@ -211,7 +211,7 @@ class DoctrineSpoolTest extends TestCase
      */
     protected function createSpool($emailsToSend = array())
     {
-        $repo = $this->getMockBuilder('Sonatra\Component\SwiftmailerDoctrine\Model\Repository\SpoolEmailRepositoryInterface')->getMock();
+        $repo = $this->getMockBuilder('Fxp\Component\SwiftmailerDoctrine\Model\Repository\SpoolEmailRepositoryInterface')->getMock();
         $repo->expects($this->any())
             ->method('findEmailsToSend')
             ->will($this->returnValue($emailsToSend));
@@ -228,6 +228,6 @@ class DoctrineSpoolTest extends TestCase
             ->will($this->returnValue($manager))
         ;
 
-        return new DoctrineSpool($registry, 'Sonatra\Component\SwiftmailerDoctrine\Entity\SpoolEmail');
+        return new DoctrineSpool($registry, 'Fxp\Component\SwiftmailerDoctrine\Entity\SpoolEmail');
     }
 }
