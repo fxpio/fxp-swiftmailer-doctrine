@@ -16,7 +16,7 @@
     "require": {
         "php": "^7.1.0",
         "swiftmailer/swiftmailer": "^6.0.0",
-        "doctrine/common": "^2.8.0"
+        "doctrine/persistence": "^1.0.0"
     },
     "require-dev": {
         "doctrine/orm": "^2.6.0"
