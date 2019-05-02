@@ -44,7 +44,7 @@ class SpoolEmailRepository extends EntityRepository implements SpoolEmailReposit
     /**
      * {@inheritdoc}
      */
-    public function recover($timeout = 900)
+    public function recover($timeout = 900): void
     {
         $timeoutDate = new \DateTime();
         $timeoutDate->modify(sprintf('-%s seconds', $timeout));
@@ -53,7 +53,8 @@ class SpoolEmailRepository extends EntityRepository implements SpoolEmailReposit
         $query = $this->getEntityManager()->createQuery($str)
             ->setParameter('waitStatus', SpoolEmailStatus::STATUS_WAITING)
             ->setParameter('failedStatus', SpoolEmailStatus::STATUS_FAILED)
-            ->setParameter('timeoutDate', $timeoutDate);
+            ->setParameter('timeoutDate', $timeoutDate)
+        ;
 
         $query->execute();
     }

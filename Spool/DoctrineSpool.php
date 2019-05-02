@@ -60,8 +60,9 @@ class DoctrineSpool extends \Swift_ConfigurableSpool
         $validClass = 'Fxp\Component\SwiftmailerDoctrine\Model\SpoolEmailInterface';
         $ref = new \ReflectionClass($class);
 
-        if (!in_array($validClass, $ref->getInterfaceNames())) {
+        if (!\in_array($validClass, $ref->getInterfaceNames(), true)) {
             $msg = sprintf('The "%s" class does not extend "%s"', $class, $validClass);
+
             throw new InvalidArgumentException($msg);
         }
 
@@ -71,6 +72,7 @@ class DoctrineSpool extends \Swift_ConfigurableSpool
 
         if (!$this->repo instanceof SpoolEmailRepositoryInterface) {
             $msg = sprintf('The repository of "%s" must be an instance of "%s"', $class, 'Fxp\Component\SwiftmailerDoctrine\Model\Repository\SpoolEmailRepositoryInterface');
+
             throw new InvalidArgumentException($msg);
         }
     }
@@ -78,7 +80,7 @@ class DoctrineSpool extends \Swift_ConfigurableSpool
     /**
      * {@inheritdoc}
      */
-    public function start()
+    public function start(): void
     {
         $this->started = true;
     }
@@ -86,7 +88,7 @@ class DoctrineSpool extends \Swift_ConfigurableSpool
     /**
      * {@inheritdoc}
      */
-    public function stop()
+    public function stop(): void
     {
         $this->started = false;
     }
@@ -114,7 +116,7 @@ class DoctrineSpool extends \Swift_ConfigurableSpool
     /**
      * {@inheritdoc}
      */
-    public function flushQueue(\Swift_Transport $transport, &$failedRecipients = null)
+    public function flushQueue(Swift_Transport $transport, &$failedRecipients = null)
     {
         if (!$transport->isStarted()) {
             $transport->start();
@@ -122,7 +124,7 @@ class DoctrineSpool extends \Swift_ConfigurableSpool
 
         $emails = $this->repo->findEmailsToSend($this->getMessageLimit());
 
-        return count($emails) > 0
+        return \count($emails) > 0
             ? $this->sendEmails($transport, $failedRecipients, $emails)
             : 0;
     }
@@ -132,7 +134,7 @@ class DoctrineSpool extends \Swift_ConfigurableSpool
      *
      * @param int $timeout In second, Defaults is for very slow smtp responses
      */
-    public function recover($timeout = 900)
+    public function recover($timeout = 900): void
     {
         $this->repo->recover($timeout);
     }
@@ -141,12 +143,12 @@ class DoctrineSpool extends \Swift_ConfigurableSpool
      * Send the emails message.
      *
      * @param \Swift_Transport      $transport        The swift transport
-     * @param string[]|null         $failedRecipients The failed recipients
+     * @param null|string[]         $failedRecipients The failed recipients
      * @param SpoolEmailInterface[] $emails           The spool emails
      *
      * @return int The count of sent emails
      */
-    protected function sendEmails(\Swift_Transport $transport, &$failedRecipients, array $emails)
+    protected function sendEmails(Swift_Transport $transport, &$failedRecipients, array $emails)
     {
         $count = 0;
         $time = time();
@@ -157,6 +159,7 @@ class DoctrineSpool extends \Swift_ConfigurableSpool
             if ($skip) {
                 $email->setStatus(SpoolEmailStatus::STATUS_FAILED);
                 $email->setStatusMessage('The time limit of execution is exceeded');
+
                 continue;
             }
 
@@ -197,11 +200,11 @@ class DoctrineSpool extends \Swift_ConfigurableSpool
      *
      * @param Swift_Transport     $transport        The swiftmailer transport
      * @param SpoolEmailInterface $email            The spool email
-     * @param string[]|null       $failedRecipients The failed recipients
+     * @param null|string[]       $failedRecipients The failed recipients
      *
      * @return int The count
      */
-    protected function sendEmail(\Swift_Transport $transport, SpoolEmailInterface $email, &$failedRecipients)
+    protected function sendEmail(Swift_Transport $transport, SpoolEmailInterface $email, &$failedRecipients)
     {
         $count = 0;
 
@@ -225,7 +228,7 @@ class DoctrineSpool extends \Swift_ConfigurableSpool
      *
      * @param SpoolEmailInterface $email The spool email
      */
-    protected function flushEmail(SpoolEmailInterface $email)
+    protected function flushEmail(SpoolEmailInterface $email): void
     {
         $email->setSentAt(new \DateTime());
         $this->om->persist($email);

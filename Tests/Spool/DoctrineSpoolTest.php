@@ -21,34 +21,35 @@ use PHPUnit\Framework\TestCase;
  * Doctrine ORM Spool Tests.
  *
  * @author François Pluchino <francois.pluchino@gmail.com>
+ *
+ * @internal
  */
-class DoctrineSpoolTest extends TestCase
+final class DoctrineSpoolTest extends TestCase
 {
-    /**
-     * @expectedException \Fxp\Component\SwiftmailerDoctrine\Exception\InvalidArgumentException
-     * @expectedExceptionMessage The "stdClass" class does not extend "Fxp\Component\SwiftmailerDoctrine\Model\SpoolEmailInterface
-     */
-    public function testInvalidClass()
+    public function testInvalidClass(): void
     {
-        /* @var ManagerRegistry|\PHPUnit_Framework_MockObject_MockObject $registry */
+        $this->expectException(\Fxp\Component\SwiftmailerDoctrine\Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The "stdClass" class does not extend "Fxp\\Component\\SwiftmailerDoctrine\\Model\\SpoolEmailInterface');
+
+        /** @var ManagerRegistry|\PHPUnit_Framework_MockObject_MockObject $registry */
         $registry = $this->getMockBuilder('Doctrine\Common\Persistence\ManagerRegistry')->getMock();
 
         new DoctrineSpool($registry, 'stdClass');
     }
 
-    /**
-     * @expectedException \Fxp\Component\SwiftmailerDoctrine\Exception\InvalidArgumentException
-     * @expectedExceptionMessage The repository of "Fxp\Component\SwiftmailerDoctrine\Entity\SpoolEmail" must be an instance of "Fxp\Component\SwiftmailerDoctrine\Model\Repository\SpoolEmailRepositoryInterface"
-     */
-    public function testInvalidRepository()
+    public function testInvalidRepository(): void
     {
+        $this->expectException(\Fxp\Component\SwiftmailerDoctrine\Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The repository of "Fxp\\Component\\SwiftmailerDoctrine\\Entity\\SpoolEmail" must be an instance of "Fxp\\Component\\SwiftmailerDoctrine\\Model\\Repository\\SpoolEmailRepositoryInterface"');
+
         $repo = $this->getMockBuilder('Doctrine\ORM\ObjectRepository')->getMock();
         $manager = $this->getMockBuilder('Doctrine\Common\Persistence\ObjectManager')->getMock();
         $manager->expects($this->any())
             ->method('getRepository')
-            ->will($this->returnValue($repo));
+            ->will($this->returnValue($repo))
+        ;
 
-        /* @var ManagerRegistry|\PHPUnit_Framework_MockObject_MockObject $registry */
+        /** @var ManagerRegistry|\PHPUnit_Framework_MockObject_MockObject $registry */
         $registry = $this->getMockBuilder('Doctrine\Common\Persistence\ManagerRegistry')->getMock();
         $registry->expects($this->any())
             ->method('getManagerForClass')
@@ -58,7 +59,7 @@ class DoctrineSpoolTest extends TestCase
         new DoctrineSpool($registry, 'Fxp\Component\SwiftmailerDoctrine\Entity\SpoolEmail');
     }
 
-    public function testBasic()
+    public function testBasic(): void
     {
         $spool = $this->createSpool();
 
@@ -70,9 +71,9 @@ class DoctrineSpoolTest extends TestCase
         $this->assertFalse($spool->isStarted());
     }
 
-    public function testQueueMessage()
+    public function testQueueMessage(): void
     {
-        /* @var \Swift_Mime_SimpleMessage $message */
+        /** @var \Swift_Mime_SimpleMessage $message */
         $message = $this->getMockBuilder('Swift_Mime_SimpleMessage')
             ->disableOriginalConstructor()
             ->getMock()
@@ -81,10 +82,10 @@ class DoctrineSpoolTest extends TestCase
         $this->assertTrue($this->createSpool()->queueMessage($message));
     }
 
-    public function testFlushQueueEmpty()
+    public function testFlushQueueEmpty(): void
     {
         $failedRecipients = [];
-        /* @var \Swift_Transport|\PHPUnit_Framework_MockObject_MockObject $transport */
+        /** @var \PHPUnit_Framework_MockObject_MockObject|\Swift_Transport $transport */
         $transport = $this->getMockBuilder('Swift_Transport')
             ->disableOriginalConstructor()
             ->getMock()
@@ -94,15 +95,15 @@ class DoctrineSpoolTest extends TestCase
         $this->assertCount(0, $failedRecipients);
     }
 
-    public function testFlushQueueFailed()
+    public function testFlushQueueFailed(): void
     {
         $failedRecipients = [];
-        /* @var \Swift_Transport|\PHPUnit_Framework_MockObject_MockObject $transport */
+        /** @var \PHPUnit_Framework_MockObject_MockObject|\Swift_Transport $transport */
         $transport = $this->getMockBuilder('Swift_Transport')
             ->disableOriginalConstructor()
             ->getMock()
         ;
-        /* @var \Swift_Mime_SimpleMessage $message */
+        /** @var \Swift_Mime_SimpleMessage $message */
         $message = $this->getMockBuilder('Swift_Mime_SimpleMessage')->disableOriginalConstructor()->getMock();
         $email = new SpoolEmail($message);
 
@@ -113,19 +114,20 @@ class DoctrineSpoolTest extends TestCase
         $this->assertNull($email->getStatusMessage());
     }
 
-    public function testFlushQueueFailedException()
+    public function testFlushQueueFailedException(): void
     {
         $failedRecipients = [];
-        /* @var \Swift_Transport|\PHPUnit_Framework_MockObject_MockObject $transport */
+        /** @var \PHPUnit_Framework_MockObject_MockObject|\Swift_Transport $transport */
         $transport = $this->getMockBuilder('Swift_Transport')
             ->disableOriginalConstructor()
             ->getMock()
         ;
         $transport->expects($this->any())
             ->method('send')
-            ->will($this->throwException(new \Swift_TransportException('Message exception')));
+            ->will($this->throwException(new \Swift_TransportException('Message exception')))
+        ;
 
-        /* @var \Swift_Mime_SimpleMessage $message */
+        /** @var \Swift_Mime_SimpleMessage $message */
         $message = $this->getMockBuilder('Swift_Mime_SimpleMessage')->disableOriginalConstructor()->getMock();
         $email = new SpoolEmail($message);
 
@@ -136,19 +138,20 @@ class DoctrineSpoolTest extends TestCase
         $this->assertSame('Message exception', $email->getStatusMessage());
     }
 
-    public function testFlushQueueSuccess()
+    public function testFlushQueueSuccess(): void
     {
         $failedRecipients = [];
-        /* @var \Swift_Transport|\PHPUnit_Framework_MockObject_MockObject $transport */
+        /** @var \PHPUnit_Framework_MockObject_MockObject|\Swift_Transport $transport */
         $transport = $this->getMockBuilder('Swift_Transport')
             ->disableOriginalConstructor()
             ->getMock()
         ;
         $transport->expects($this->any())
             ->method('send')
-            ->will($this->returnValue(1));
+            ->will($this->returnValue(1))
+        ;
 
-        /* @var \Swift_Mime_SimpleMessage $message */
+        /** @var \Swift_Mime_SimpleMessage $message */
         $message = $this->getMockBuilder('Swift_Mime_SimpleMessage')->disableOriginalConstructor()->getMock();
         $email = new SpoolEmail($message);
 
@@ -159,10 +162,10 @@ class DoctrineSpoolTest extends TestCase
         $this->assertNull($email->getStatusMessage());
     }
 
-    public function testFlushQueueTimeout()
+    public function testFlushQueueTimeout(): void
     {
         $failedRecipients = [];
-        /* @var \Swift_Transport|\PHPUnit_Framework_MockObject_MockObject $transport */
+        /** @var \PHPUnit_Framework_MockObject_MockObject|\Swift_Transport $transport */
         $transport = $this->getMockBuilder('Swift_Transport')
             ->disableOriginalConstructor()
             ->getMock()
@@ -173,12 +176,13 @@ class DoctrineSpoolTest extends TestCase
                 sleep(1);
 
                 return 1;
-            }));
+            }))
+        ;
 
-        /* @var \Swift_Mime_SimpleMessage $message1 */
+        /** @var \Swift_Mime_SimpleMessage $message1 */
         $message1 = $this->getMockBuilder('Swift_Mime_SimpleMessage')->disableOriginalConstructor()->getMock();
         $email1 = new SpoolEmail($message1);
-        /* @var \Swift_Mime_SimpleMessage $message2 */
+        /** @var \Swift_Mime_SimpleMessage $message2 */
         $message2 = $this->getMockBuilder('Swift_Mime_SimpleMessage')->disableOriginalConstructor()->getMock();
         $email2 = new SpoolEmail($message2);
 
@@ -196,7 +200,7 @@ class DoctrineSpoolTest extends TestCase
         $this->assertSame('The time limit of execution is exceeded', $email2->getStatusMessage());
     }
 
-    public function testRecover()
+    public function testRecover(): void
     {
         $spool = $this->createSpool();
         $spool->recover(900);
@@ -214,14 +218,16 @@ class DoctrineSpoolTest extends TestCase
         $repo = $this->getMockBuilder('Fxp\Component\SwiftmailerDoctrine\Model\Repository\SpoolEmailRepositoryInterface')->getMock();
         $repo->expects($this->any())
             ->method('findEmailsToSend')
-            ->will($this->returnValue($emailsToSend));
+            ->will($this->returnValue($emailsToSend))
+        ;
 
         $manager = $this->getMockBuilder('Doctrine\Common\Persistence\ObjectManager')->getMock();
         $manager->expects($this->any())
             ->method('getRepository')
-            ->will($this->returnValue($repo));
+            ->will($this->returnValue($repo))
+        ;
 
-        /* @var ManagerRegistry|\PHPUnit_Framework_MockObject_MockObject $registry */
+        /** @var ManagerRegistry|\PHPUnit_Framework_MockObject_MockObject $registry */
         $registry = $this->getMockBuilder('Doctrine\Common\Persistence\ManagerRegistry')->getMock();
         $registry->expects($this->any())
             ->method('getManagerForClass')

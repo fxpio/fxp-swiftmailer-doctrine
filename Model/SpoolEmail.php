@@ -21,7 +21,7 @@ use Fxp\Component\SwiftmailerDoctrine\SpoolEmailStatus;
 abstract class SpoolEmail implements SpoolEmailInterface
 {
     /**
-     * @var int|string|null
+     * @var null|int|string
      */
     protected $id;
 
@@ -31,7 +31,7 @@ abstract class SpoolEmail implements SpoolEmailInterface
     protected $message;
 
     /**
-     * @var \DateTime|null
+     * @var null|\DateTime
      */
     protected $sentAt;
 
@@ -41,7 +41,7 @@ abstract class SpoolEmail implements SpoolEmailInterface
     protected $status;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     protected $statusMessage;
 
@@ -79,7 +79,7 @@ abstract class SpoolEmail implements SpoolEmailInterface
      */
     public function getMessage()
     {
-        return unserialize(base64_decode($this->message));
+        return unserialize(base64_decode($this->message, true));
     }
 
     /**

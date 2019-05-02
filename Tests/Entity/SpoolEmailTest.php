@@ -19,10 +19,12 @@ use PHPUnit\Framework\TestCase;
  * SpoolEmail Entity Tests.
  *
  * @author François Pluchino <francois.pluchino@gmail.com>
+ *
+ * @internal
  */
-class SpoolEmailTest extends TestCase
+final class SpoolEmailTest extends TestCase
 {
-    public function testDefaultValue()
+    public function testDefaultValue(): void
     {
         $message = $this->createSwiftMessage();
         $sp = new SpoolEmail($message);
@@ -34,7 +36,7 @@ class SpoolEmailTest extends TestCase
         $this->assertNull($sp->getStatusMessage());
     }
 
-    public function testEdition()
+    public function testEdition(): void
     {
         $message = $this->createSwiftMessage();
         $sp = new SpoolEmail($message);
@@ -59,15 +61,13 @@ class SpoolEmailTest extends TestCase
     }
 
     /**
-     * @return \Swift_Mime_SimpleMessage|\PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Swift_Mime_SimpleMessage
      */
     protected function createSwiftMessage()
     {
-        $message = $this->getMockBuilder('Swift_Mime_SimpleMessage')
+        return $this->getMockBuilder('Swift_Mime_SimpleMessage')
             ->disableOriginalConstructor()
             ->getMock()
         ;
-
-        return $message;
     }
 }

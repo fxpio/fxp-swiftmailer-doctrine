@@ -21,7 +21,7 @@ interface SpoolEmailInterface
     /**
      * Get the id.
      *
-     * @return int|string|null
+     * @return null|int|string
      */
     public function getId();
 
@@ -44,7 +44,7 @@ interface SpoolEmailInterface
     /**
      * Set the sent date.
      *
-     * @param \DateTime|null $sentAt The sent date
+     * @param null|\DateTime $sentAt The sent date
      *
      * @return self
      */
@@ -53,7 +53,7 @@ interface SpoolEmailInterface
     /**
      * Get the sent date.
      *
-     * @return \DateTime|null
+     * @return null|\DateTime
      */
     public function getSentAt();
 
@@ -80,7 +80,7 @@ interface SpoolEmailInterface
     /**
      * Set the status message.
      *
-     * @param string|null $message The status message
+     * @param null|string $message The status message
      *
      * @return self
      */
@@ -89,7 +89,7 @@ interface SpoolEmailInterface
     /**
      * Get the status message.
      *
-     * @return string|null
+     * @return null|string
      */
     public function getStatusMessage();
 }

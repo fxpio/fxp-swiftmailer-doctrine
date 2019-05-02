@@ -19,20 +19,20 @@ abstract class SpoolEmailStatus
     /**
      * The SpoolEmailStatus::STATUS_FAILED is used in SpoolEmailInterface::getStatus().
      */
-    const STATUS_FAILED = -1;
+    public const STATUS_FAILED = -1;
 
     /**
      * The SpoolEmailStatus::STATUS_WAITING is used in SpoolEmailInterface::getStatus().
      */
-    const STATUS_WAITING = 0;
+    public const STATUS_WAITING = 0;
 
     /**
      * The SpoolEmailStatus::STATUS_SENDING is used in SpoolEmailInterface::getStatus().
      */
-    const STATUS_SENDING = 1;
+    public const STATUS_SENDING = 1;
 
     /**
      * The SpoolEmailStatus::STATUS_SUCCESS is used in SpoolEmailInterface::getStatus().
      */
-    const STATUS_SUCCESS = 2;
+    public const STATUS_SUCCESS = 2;
 }

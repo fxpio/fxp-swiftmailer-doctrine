@@ -25,7 +25,7 @@ interface SpoolEmailRepositoryInterface extends ObjectRepository, Selectable
     /**
      * Find the emails to send.
      *
-     * @param int|null $limit The limit
+     * @param null|int $limit The limit
      *
      * @return SpoolEmailInterface[]
      */

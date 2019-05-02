@@ -18,12 +18,14 @@ use PHPUnit\Framework\TestCase;
  * SpoolEmail Repository Tests.
  *
  * @author François Pluchino <francois.pluchino@gmail.com>
+ *
+ * @internal
  */
-class SpoolEmailRepositoryTest extends TestCase
+final class SpoolEmailRepositoryTest extends TestCase
 {
-    public function testFindEmailsToSend()
+    public function testFindEmailsToSend(): void
     {
-        /* @var SpoolEmailRepositoryInterface|\PHPUnit_Framework_MockObject_MockObject $repo */
+        /** @var \PHPUnit_Framework_MockObject_MockObject|SpoolEmailRepositoryInterface $repo */
         $repo = $this->getMockBuilder('Fxp\Component\SwiftmailerDoctrine\Entity\Repository\SpoolEmailRepository')
             ->disableOriginalConstructor()
             ->setMethods(['createQueryBuilder'])
@@ -33,10 +35,12 @@ class SpoolEmailRepositoryTest extends TestCase
         $q = $this->getMockBuilder('\Doctrine\ORM\AbstractQuery')
             ->setMethods(['setParameter', 'getResult'])
             ->disableOriginalConstructor()
-            ->getMockForAbstractClass();
+            ->getMockForAbstractClass()
+        ;
         $q->expects($this->any())
             ->method('getResult')
-            ->will($this->returnValue([]));
+            ->will($this->returnValue([]))
+        ;
 
         $qb = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')
             ->disableOriginalConstructor()
@@ -44,16 +48,20 @@ class SpoolEmailRepositoryTest extends TestCase
         ;
         $qb->expects($this->any())
             ->method('where')
-            ->will($this->returnSelf());
+            ->will($this->returnSelf())
+        ;
         $qb->expects($this->any())
             ->method('orderBy')
-            ->will($this->returnSelf());
+            ->will($this->returnSelf())
+        ;
         $qb->expects($this->any())
             ->method('setParameter')
-            ->will($this->returnSelf());
+            ->will($this->returnSelf())
+        ;
         $qb->expects($this->any())
             ->method('getQuery')
-            ->will($this->returnValue($q));
+            ->will($this->returnValue($q))
+        ;
 
         $repo->expects($this->any())
             ->method('createQueryBuilder')
@@ -63,9 +71,9 @@ class SpoolEmailRepositoryTest extends TestCase
         $this->assertSame([], $repo->findEmailsToSend(1));
     }
 
-    public function testRecover()
+    public function testRecover(): void
     {
-        /* @var SpoolEmailRepositoryInterface|\PHPUnit_Framework_MockObject_MockObject $repo */
+        /** @var \PHPUnit_Framework_MockObject_MockObject|SpoolEmailRepositoryInterface $repo */
         $repo = $this->getMockBuilder('Fxp\Component\SwiftmailerDoctrine\Entity\Repository\SpoolEmailRepository')
             ->disableOriginalConstructor()
             ->setMethods(['getEntityManager', 'createQueryBuilder'])
@@ -75,27 +83,33 @@ class SpoolEmailRepositoryTest extends TestCase
         $q = $this->getMockBuilder('\Doctrine\ORM\AbstractQuery')
             ->setMethods(['setParameter', 'execute'])
             ->disableOriginalConstructor()
-            ->getMockForAbstractClass();
+            ->getMockForAbstractClass()
+        ;
         $q->expects($this->any())
             ->method('setParameter')
-            ->will($this->returnSelf());
+            ->will($this->returnSelf())
+        ;
 
         $em = $this->getMockBuilder('Doctrine\ORM\EntityManagerInterface')->getMock();
         $em->expects($this->any())
             ->method('createQuery')
-            ->will($this->returnValue($q));
+            ->will($this->returnValue($q))
+        ;
 
         $repo->expects($this->any())
             ->method('getEntityManager')
-            ->will($this->returnValue($em));
+            ->will($this->returnValue($em))
+        ;
 
         $q = $this->getMockBuilder('\Doctrine\ORM\AbstractQuery')
             ->setMethods(['setParameter', 'getResult'])
             ->disableOriginalConstructor()
-            ->getMockForAbstractClass();
+            ->getMockForAbstractClass()
+        ;
         $q->expects($this->any())
             ->method('getResult')
-            ->will($this->returnValue([]));
+            ->will($this->returnValue([]))
+        ;
 
         $qb = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')
             ->disableOriginalConstructor()
@@ -103,16 +117,20 @@ class SpoolEmailRepositoryTest extends TestCase
         ;
         $qb->expects($this->any())
             ->method('where')
-            ->will($this->returnSelf());
+            ->will($this->returnSelf())
+        ;
         $qb->expects($this->any())
             ->method('orderBy')
-            ->will($this->returnSelf());
+            ->will($this->returnSelf())
+        ;
         $qb->expects($this->any())
             ->method('setParameter')
-            ->will($this->returnSelf());
+            ->will($this->returnSelf())
+        ;
         $qb->expects($this->any())
             ->method('getQuery')
-            ->will($this->returnValue($q));
+            ->will($this->returnValue($q))
+        ;
 
         $repo->expects($this->any())
             ->method('createQueryBuilder')
