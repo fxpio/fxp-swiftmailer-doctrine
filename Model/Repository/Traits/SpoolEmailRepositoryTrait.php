@@ -9,21 +9,27 @@
  * file that was distributed with this source code.
  */
 
-namespace Fxp\Component\SwiftmailerDoctrine\Entity\Repository;
+namespace Fxp\Component\SwiftmailerDoctrine\Model\Repository\Traits;
 
-use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Fxp\Component\SwiftmailerDoctrine\Model\Repository\SpoolEmailRepositoryInterface;
 use Fxp\Component\SwiftmailerDoctrine\SpoolEmailStatus;
 
 /**
- * Spool email entity repository.
+ * Trait of Spool email repository.
  *
  * @author François Pluchino <francois.pluchino@gmail.com>
+ *
+ * @method QueryBuilder           createQueryBuilder($alias, $indexBy = null)
+ * @method EntityManagerInterface getEntityManager()
  */
-class SpoolEmailRepository extends EntityRepository implements SpoolEmailRepositoryInterface
+trait SpoolEmailRepositoryTrait
 {
     /**
-     * {@inheritdoc}
+     * @see SpoolEmailRepositoryInterface::findEmailsToSend()
+     *
+     * @param null|mixed $limit
      */
     public function findEmailsToSend($limit = null)
     {
@@ -42,7 +48,9 @@ class SpoolEmailRepository extends EntityRepository implements SpoolEmailReposit
     }
 
     /**
-     * {@inheritdoc}
+     * @see SpoolEmailRepositoryInterface::recover()
+     *
+     * @param mixed $timeout
      */
     public function recover($timeout = 900): void
     {

@@ -19,13 +19,6 @@ namespace Fxp\Component\SwiftmailerDoctrine\Model;
 interface SpoolEmailInterface
 {
     /**
-     * Get the id.
-     *
-     * @return null|int|string
-     */
-    public function getId();
-
-    /**
      * Set the swiftmailer message.
      *
      * @param \Swift_Mime_SimpleMessage $message

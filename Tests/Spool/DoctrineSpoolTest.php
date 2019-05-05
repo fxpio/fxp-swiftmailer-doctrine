@@ -12,9 +12,9 @@
 namespace Fxp\Component\SwiftmailerDoctrine\Tests\DependencyInjection;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Fxp\Component\SwiftmailerDoctrine\Entity\SpoolEmail;
 use Fxp\Component\SwiftmailerDoctrine\Spool\DoctrineSpool;
 use Fxp\Component\SwiftmailerDoctrine\SpoolEmailStatus;
+use Fxp\Component\SwiftmailerDoctrine\Tests\Fixtures\Entity\SpoolEmail;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -40,7 +40,7 @@ final class DoctrineSpoolTest extends TestCase
     public function testInvalidRepository(): void
     {
         $this->expectException(\Fxp\Component\SwiftmailerDoctrine\Exception\InvalidArgumentException::class);
-        $this->expectExceptionMessage('The repository of "Fxp\\Component\\SwiftmailerDoctrine\\Entity\\SpoolEmail" must be an instance of "Fxp\\Component\\SwiftmailerDoctrine\\Model\\Repository\\SpoolEmailRepositoryInterface"');
+        $this->expectExceptionMessage('The repository of "'.SpoolEmail::class.'" must be an instance of "Fxp\\Component\\SwiftmailerDoctrine\\Model\\Repository\\SpoolEmailRepositoryInterface"');
 
         $repo = $this->getMockBuilder('Doctrine\ORM\ObjectRepository')->getMock();
         $manager = $this->getMockBuilder('Doctrine\Common\Persistence\ObjectManager')->getMock();
@@ -56,7 +56,7 @@ final class DoctrineSpoolTest extends TestCase
             ->will($this->returnValue($manager))
         ;
 
-        new DoctrineSpool($registry, 'Fxp\Component\SwiftmailerDoctrine\Entity\SpoolEmail');
+        new DoctrineSpool($registry, SpoolEmail::class);
     }
 
     public function testBasic(): void
@@ -105,7 +105,8 @@ final class DoctrineSpoolTest extends TestCase
         ;
         /** @var \Swift_Mime_SimpleMessage $message */
         $message = $this->getMockBuilder('Swift_Mime_SimpleMessage')->disableOriginalConstructor()->getMock();
-        $email = new SpoolEmail($message);
+        $email = new SpoolEmail();
+        $email->setMessage($message);
 
         $this->assertSame(SpoolEmailStatus::STATUS_WAITING, $email->getStatus());
         $this->assertEquals(0, $this->createSpool([$email])->flushQueue($transport, $failedRecipients));
@@ -129,7 +130,8 @@ final class DoctrineSpoolTest extends TestCase
 
         /** @var \Swift_Mime_SimpleMessage $message */
         $message = $this->getMockBuilder('Swift_Mime_SimpleMessage')->disableOriginalConstructor()->getMock();
-        $email = new SpoolEmail($message);
+        $email = new SpoolEmail();
+        $email->setMessage($message);
 
         $this->assertSame(SpoolEmailStatus::STATUS_WAITING, $email->getStatus());
         $this->assertEquals(0, $this->createSpool([$email])->flushQueue($transport, $failedRecipients));
@@ -153,7 +155,8 @@ final class DoctrineSpoolTest extends TestCase
 
         /** @var \Swift_Mime_SimpleMessage $message */
         $message = $this->getMockBuilder('Swift_Mime_SimpleMessage')->disableOriginalConstructor()->getMock();
-        $email = new SpoolEmail($message);
+        $email = new SpoolEmail();
+        $email->setMessage($message);
 
         $this->assertSame(SpoolEmailStatus::STATUS_WAITING, $email->getStatus());
         $this->assertEquals(1, $this->createSpool([$email])->flushQueue($transport, $failedRecipients));
@@ -181,10 +184,12 @@ final class DoctrineSpoolTest extends TestCase
 
         /** @var \Swift_Mime_SimpleMessage $message1 */
         $message1 = $this->getMockBuilder('Swift_Mime_SimpleMessage')->disableOriginalConstructor()->getMock();
-        $email1 = new SpoolEmail($message1);
+        $email1 = new SpoolEmail();
+        $email1->setMessage($message1);
         /** @var \Swift_Mime_SimpleMessage $message2 */
         $message2 = $this->getMockBuilder('Swift_Mime_SimpleMessage')->disableOriginalConstructor()->getMock();
-        $email2 = new SpoolEmail($message2);
+        $email2 = new SpoolEmail();
+        $email2->setMessage($message2);
 
         $spool = $this->createSpool([$email1, $email2]);
         $spool->setTimeLimit(1);
@@ -234,6 +239,6 @@ final class DoctrineSpoolTest extends TestCase
             ->will($this->returnValue($manager))
         ;
 
-        return new DoctrineSpool($registry, 'Fxp\Component\SwiftmailerDoctrine\Entity\SpoolEmail');
+        return new DoctrineSpool($registry, SpoolEmail::class);
     }
 }

@@ -12,21 +12,22 @@
 namespace Fxp\Component\SwiftmailerDoctrine\Tests\Entity;
 
 use Fxp\Component\SwiftmailerDoctrine\Model\Repository\SpoolEmailRepositoryInterface;
+use Fxp\Component\SwiftmailerDoctrine\Tests\Fixtures\Repository\SpoolEmailRepository;
 use PHPUnit\Framework\TestCase;
 
 /**
- * SpoolEmail Repository Tests.
+ * SpoolEmail Repository Trait Tests.
  *
  * @author François Pluchino <francois.pluchino@gmail.com>
  *
  * @internal
  */
-final class SpoolEmailRepositoryTest extends TestCase
+final class SpoolEmailRepositoryTraitTest extends TestCase
 {
     public function testFindEmailsToSend(): void
     {
         /** @var \PHPUnit_Framework_MockObject_MockObject|SpoolEmailRepositoryInterface $repo */
-        $repo = $this->getMockBuilder('Fxp\Component\SwiftmailerDoctrine\Entity\Repository\SpoolEmailRepository')
+        $repo = $this->getMockBuilder(SpoolEmailRepository::class)
             ->disableOriginalConstructor()
             ->setMethods(['createQueryBuilder'])
             ->getMock()
@@ -74,7 +75,7 @@ final class SpoolEmailRepositoryTest extends TestCase
     public function testRecover(): void
     {
         /** @var \PHPUnit_Framework_MockObject_MockObject|SpoolEmailRepositoryInterface $repo */
-        $repo = $this->getMockBuilder('Fxp\Component\SwiftmailerDoctrine\Entity\Repository\SpoolEmailRepository')
+        $repo = $this->getMockBuilder(SpoolEmailRepository::class)
             ->disableOriginalConstructor()
             ->setMethods(['getEntityManager', 'createQueryBuilder'])
             ->getMock()
@@ -137,7 +138,7 @@ final class SpoolEmailRepositoryTest extends TestCase
             ->will($this->returnValue($qb))
         ;
 
-        $repo->recover(900);
+        $repo->recover(1000);
 
         $this->assertSame([], $repo->findEmailsToSend(1));
     }

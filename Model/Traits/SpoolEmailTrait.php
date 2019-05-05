@@ -9,81 +9,66 @@
  * file that was distributed with this source code.
  */
 
-namespace Fxp\Component\SwiftmailerDoctrine\Model;
+namespace Fxp\Component\SwiftmailerDoctrine\Model\Traits;
 
+use Doctrine\ORM\Mapping as ORM;
 use Fxp\Component\SwiftmailerDoctrine\SpoolEmailStatus;
 
 /**
- * Spool email model.
+ * Trait of Spool email model.
  *
  * @author François Pluchino <francois.pluchino@gmail.com>
  */
-abstract class SpoolEmail implements SpoolEmailInterface
+trait SpoolEmailTrait
 {
     /**
-     * @var null|int|string
-     */
-    protected $id;
-
-    /**
      * @var string
+     *
+     * @ORM\Column(type="text")
      */
     protected $message;
 
     /**
      * @var null|\DateTime
+     *
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $sentAt;
 
     /**
      * @var int
+     *
+     * @ORM\Column(type="integer")
      */
-    protected $status;
+    protected $status = SpoolEmailStatus::STATUS_WAITING;
 
     /**
      * @var null|string
+     *
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $statusMessage;
 
     /**
-     * Constructor.
-     *
-     * @param \Swift_Mime_SimpleMessage $message The swift message
-     */
-    public function __construct(\Swift_Mime_SimpleMessage $message)
-    {
-        $this->setMessage($message);
-        $this->status = SpoolEmailStatus::STATUS_WAITING;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * {@inheritdoc}
+     * @see SpoolEmailInterface::setMessage()
      */
     public function setMessage(\Swift_Mime_SimpleMessage $message)
     {
-        $this->message = base64_encode(serialize($message));
+        $this->message = serialize($message);
 
         return $this;
     }
 
     /**
-     * {@inheritdoc}
+     * @see SpoolEmailInterface::getMessage()
      */
     public function getMessage()
     {
-        return unserialize(base64_decode($this->message, true));
+        return null !== $this->message ? unserialize($this->message) : null;
     }
 
     /**
-     * {@inheritdoc}
+     * @see SpoolEmailInterface::getSentAt()
      */
     public function getSentAt()
     {
@@ -91,7 +76,9 @@ abstract class SpoolEmail implements SpoolEmailInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @see SpoolEmailInterface::setSentAt()
+     *
+     * @param mixed $sentAt
      */
     public function setSentAt($sentAt)
     {
@@ -101,7 +88,9 @@ abstract class SpoolEmail implements SpoolEmailInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @see SpoolEmailInterface::setStatus()
+     *
+     * @param mixed $status
      */
     public function setStatus($status)
     {
@@ -112,7 +101,7 @@ abstract class SpoolEmail implements SpoolEmailInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @see SpoolEmailInterface::getStatus()
      */
     public function getStatus()
     {
@@ -120,7 +109,9 @@ abstract class SpoolEmail implements SpoolEmailInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @see SpoolEmailInterface::setStatusMessage()
+     *
+     * @param mixed $message
      */
     public function setStatusMessage($message)
     {
@@ -130,7 +121,7 @@ abstract class SpoolEmail implements SpoolEmailInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @see SpoolEmailInterface::getStatusMessage()
      */
     public function getStatusMessage()
     {
