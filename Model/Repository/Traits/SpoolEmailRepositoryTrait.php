@@ -23,6 +23,7 @@ use Fxp\Component\SwiftmailerDoctrine\SpoolEmailStatus;
  *
  * @method QueryBuilder           createQueryBuilder($alias, $indexBy = null)
  * @method EntityManagerInterface getEntityManager()
+ * @method string                 getClassName()
  */
 trait SpoolEmailRepositoryTrait
 {
