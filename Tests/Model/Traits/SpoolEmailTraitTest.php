@@ -11,8 +11,8 @@
 
 namespace Fxp\Component\SwiftmailerDoctrine\Tests\Entity;
 
-use Fxp\Component\SwiftmailerDoctrine\Model\Traits\SpoolEmailTrait;
 use Fxp\Component\SwiftmailerDoctrine\SpoolEmailStatus;
+use Fxp\Component\SwiftmailerDoctrine\Tests\Fixtures\Entity\SpoolEmail;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -27,7 +27,7 @@ final class SpoolEmailTraitTest extends TestCase
     public function testDefaultValue(): void
     {
         $message = $this->createSwiftMessage();
-        $sp = $this->getObjectForTrait(SpoolEmailTrait::class);
+        $sp = new SpoolEmail();
 
         $this->assertNull($sp->getMessage());
         $sp->setMessage($message);
@@ -40,7 +40,7 @@ final class SpoolEmailTraitTest extends TestCase
     public function testEdition(): void
     {
         $message = $this->createSwiftMessage();
-        $sp = $this->getObjectForTrait(SpoolEmailTrait::class);
+        $sp = new SpoolEmail();
 
         $sp->setMessage($message);
         $this->assertEquals($message, $sp->getMessage());

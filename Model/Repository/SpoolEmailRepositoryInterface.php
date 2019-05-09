@@ -29,12 +29,12 @@ interface SpoolEmailRepositoryInterface extends ObjectRepository, Selectable
      *
      * @return SpoolEmailInterface[]
      */
-    public function findEmailsToSend($limit = null);
+    public function findEmailsToSend(?int $limit = null): array;
 
     /**
      * Execute a recovery if for any reason a process is sending for too long.
      *
      * @param int $timeout In second, Defaults is for very slow smtp responses
      */
-    public function recover($timeout = 900);
+    public function recover(int $timeout = 900): void;
 }

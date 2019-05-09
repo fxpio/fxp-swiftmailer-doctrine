@@ -12,6 +12,7 @@
 namespace Fxp\Component\SwiftmailerDoctrine\Model\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
+use Fxp\Component\SwiftmailerDoctrine\Model\SpoolEmailInterface;
 use Fxp\Component\SwiftmailerDoctrine\SpoolEmailStatus;
 
 /**
@@ -52,7 +53,7 @@ trait SpoolEmailTrait
     /**
      * @see SpoolEmailInterface::setMessage()
      */
-    public function setMessage(\Swift_Mime_SimpleMessage $message)
+    public function setMessage(\Swift_Mime_SimpleMessage $message): SpoolEmailInterface
     {
         $this->message = serialize($message);
 
@@ -62,7 +63,7 @@ trait SpoolEmailTrait
     /**
      * @see SpoolEmailInterface::getMessage()
      */
-    public function getMessage()
+    public function getMessage(): ?\Swift_Mime_SimpleMessage
     {
         return null !== $this->message ? unserialize($this->message) : null;
     }
@@ -70,7 +71,7 @@ trait SpoolEmailTrait
     /**
      * @see SpoolEmailInterface::getSentAt()
      */
-    public function getSentAt()
+    public function getSentAt(): ?\DateTime
     {
         return $this->sentAt;
     }
@@ -79,8 +80,10 @@ trait SpoolEmailTrait
      * @see SpoolEmailInterface::setSentAt()
      *
      * @param mixed $sentAt
+     *
+     * @return SpoolEmailInterface
      */
-    public function setSentAt($sentAt)
+    public function setSentAt(?\DateTime $sentAt): SpoolEmailInterface
     {
         $this->sentAt = $sentAt;
 
@@ -91,8 +94,10 @@ trait SpoolEmailTrait
      * @see SpoolEmailInterface::setStatus()
      *
      * @param mixed $status
+     *
+     * @return SpoolEmailInterface
      */
-    public function setStatus($status)
+    public function setStatus(int $status): SpoolEmailInterface
     {
         $this->status = $status;
         $this->setStatusMessage(null);
@@ -103,7 +108,7 @@ trait SpoolEmailTrait
     /**
      * @see SpoolEmailInterface::getStatus()
      */
-    public function getStatus()
+    public function getStatus(): int
     {
         return $this->status;
     }
@@ -111,9 +116,11 @@ trait SpoolEmailTrait
     /**
      * @see SpoolEmailInterface::setStatusMessage()
      *
-     * @param mixed $message
+     * @param null|string $message
+     *
+     * @return SpoolEmailInterface
      */
-    public function setStatusMessage($message)
+    public function setStatusMessage(?string $message): SpoolEmailInterface
     {
         $this->statusMessage = $message;
 
@@ -123,7 +130,7 @@ trait SpoolEmailTrait
     /**
      * @see SpoolEmailInterface::getStatusMessage()
      */
-    public function getStatusMessage()
+    public function getStatusMessage(): ?string
     {
         return $this->statusMessage;
     }

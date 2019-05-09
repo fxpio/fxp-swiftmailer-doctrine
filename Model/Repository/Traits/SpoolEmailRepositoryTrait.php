@@ -31,8 +31,12 @@ trait SpoolEmailRepositoryTrait
      * @see SpoolEmailRepositoryInterface::findEmailsToSend()
      *
      * @param null|mixed $limit
+     *
+     * @throws
+     *
+     * @return mixed
      */
-    public function findEmailsToSend($limit = null)
+    public function findEmailsToSend(?int $limit = null): array
     {
         $qb = $this->createQueryBuilder('se')
             ->where('se.status = :status AND (se.sentAt IS NULL OR se.sentAt <= :sentAt)')
@@ -52,8 +56,10 @@ trait SpoolEmailRepositoryTrait
      * @see SpoolEmailRepositoryInterface::recover()
      *
      * @param mixed $timeout
+     *
+     * @throws
      */
-    public function recover($timeout = 900): void
+    public function recover(int $timeout = 900): void
     {
         $timeoutDate = new \DateTime();
         $timeoutDate->modify(sprintf('-%s seconds', $timeout));

@@ -23,32 +23,32 @@ interface SpoolEmailInterface
      *
      * @param \Swift_Mime_SimpleMessage $message
      *
-     * @return self
+     * @return SpoolEmailInterface
      */
-    public function setMessage(\Swift_Mime_SimpleMessage $message);
+    public function setMessage(\Swift_Mime_SimpleMessage $message): SpoolEmailInterface;
 
     /**
      * Get the swiftmailer message.
      *
      * @return \Swift_Mime_SimpleMessage
      */
-    public function getMessage();
+    public function getMessage(): ?\Swift_Mime_SimpleMessage;
 
     /**
      * Set the sent date.
      *
      * @param null|\DateTime $sentAt The sent date
      *
-     * @return self
+     * @return SpoolEmailInterface
      */
-    public function setSentAt($sentAt);
+    public function setSentAt(?\DateTime $sentAt): SpoolEmailInterface;
 
     /**
      * Get the sent date.
      *
      * @return null|\DateTime
      */
-    public function getSentAt();
+    public function getSentAt(): ?\DateTime;
 
     /**
      * Set the status.
@@ -57,9 +57,9 @@ interface SpoolEmailInterface
      *
      * @param int $status The status
      *
-     * @return self
+     * @return SpoolEmailInterface
      */
-    public function setStatus($status);
+    public function setStatus(int $status): SpoolEmailInterface;
 
     /**
      * Get the status.
@@ -68,21 +68,21 @@ interface SpoolEmailInterface
      *
      * @return int
      */
-    public function getStatus();
+    public function getStatus(): int;
 
     /**
      * Set the status message.
      *
      * @param null|string $message The status message
      *
-     * @return self
+     * @return SpoolEmailInterface
      */
-    public function setStatusMessage($message);
+    public function setStatusMessage(?string $message): SpoolEmailInterface;
 
     /**
      * Get the status message.
      *
      * @return null|string
      */
-    public function getStatusMessage();
+    public function getStatusMessage(): ?string;
 }
