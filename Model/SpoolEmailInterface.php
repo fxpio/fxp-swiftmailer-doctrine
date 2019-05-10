@@ -23,9 +23,9 @@ interface SpoolEmailInterface
      *
      * @param \Swift_Mime_SimpleMessage $message
      *
-     * @return SpoolEmailInterface
+     * @return static
      */
-    public function setMessage(\Swift_Mime_SimpleMessage $message): SpoolEmailInterface;
+    public function setMessage(\Swift_Mime_SimpleMessage $message);
 
     /**
      * Get the swiftmailer message.
@@ -39,9 +39,9 @@ interface SpoolEmailInterface
      *
      * @param null|\DateTime $sentAt The sent date
      *
-     * @return SpoolEmailInterface
+     * @return static
      */
-    public function setSentAt(?\DateTime $sentAt): SpoolEmailInterface;
+    public function setSentAt(?\DateTime $sentAt);
 
     /**
      * Get the sent date.
@@ -57,9 +57,9 @@ interface SpoolEmailInterface
      *
      * @param int $status The status
      *
-     * @return SpoolEmailInterface
+     * @return static
      */
-    public function setStatus(int $status): SpoolEmailInterface;
+    public function setStatus(int $status);
 
     /**
      * Get the status.
@@ -75,9 +75,9 @@ interface SpoolEmailInterface
      *
      * @param null|string $message The status message
      *
-     * @return SpoolEmailInterface
+     * @return static
      */
-    public function setStatusMessage(?string $message): SpoolEmailInterface;
+    public function setStatusMessage(?string $message);
 
     /**
      * Get the status message.

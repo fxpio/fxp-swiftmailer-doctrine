@@ -54,10 +54,11 @@ class DoctrineSpool extends \Swift_ConfigurableSpool
      *
      * @throws InvalidArgumentException When the class has not the interface Fxp\Component\SwiftmailerDoctrine\Model\SpoolEmailInterface
      * @throws InvalidArgumentException When the repository is not an instance of Fxp\Component\SwiftmailerDoctrine\Model\Repository\SpoolEmailRepositoryInterface
+     * @throws \ReflectionException
      */
     public function __construct(ManagerRegistry $registry, $class)
     {
-        $validClass = 'Fxp\Component\SwiftmailerDoctrine\Model\SpoolEmailInterface';
+        $validClass = SpoolEmailInterface::class;
         $ref = new \ReflectionClass($class);
 
         if (!\in_array($validClass, $ref->getInterfaceNames(), true)) {
@@ -71,7 +72,7 @@ class DoctrineSpool extends \Swift_ConfigurableSpool
         $this->class = $class;
 
         if (!$this->repo instanceof SpoolEmailRepositoryInterface) {
-            $msg = sprintf('The repository of "%s" must be an instance of "%s"', $class, 'Fxp\Component\SwiftmailerDoctrine\Model\Repository\SpoolEmailRepositoryInterface');
+            $msg = sprintf('The repository of "%s" must be an instance of "%s"', $class, SpoolEmailRepositoryInterface::class);
 
             throw new InvalidArgumentException($msg);
         }
@@ -96,7 +97,7 @@ class DoctrineSpool extends \Swift_ConfigurableSpool
     /**
      * {@inheritdoc}
      */
-    public function isStarted()
+    public function isStarted(): bool
     {
         return $this->started;
     }
@@ -104,7 +105,7 @@ class DoctrineSpool extends \Swift_ConfigurableSpool
     /**
      * {@inheritdoc}
      */
-    public function queueMessage(\Swift_Mime_SimpleMessage $message)
+    public function queueMessage(\Swift_Mime_SimpleMessage $message): bool
     {
         $entity = new $this->class($message);
         $this->om->persist($entity);
@@ -116,7 +117,7 @@ class DoctrineSpool extends \Swift_ConfigurableSpool
     /**
      * {@inheritdoc}
      */
-    public function flushQueue(Swift_Transport $transport, &$failedRecipients = null)
+    public function flushQueue(Swift_Transport $transport, &$failedRecipients = null): int
     {
         if (!$transport->isStarted()) {
             $transport->start();
@@ -148,7 +149,7 @@ class DoctrineSpool extends \Swift_ConfigurableSpool
      *
      * @return int The count of sent emails
      */
-    protected function sendEmails(Swift_Transport $transport, &$failedRecipients, array $emails)
+    protected function sendEmails(Swift_Transport $transport, &$failedRecipients, array $emails): int
     {
         $count = 0;
         $time = time();
@@ -181,7 +182,7 @@ class DoctrineSpool extends \Swift_ConfigurableSpool
      *
      * @return SpoolEmailInterface[]
      */
-    protected function prepareEmails(array $emails)
+    protected function prepareEmails(array $emails): array
     {
         foreach ($emails as $email) {
             $email->setStatus(SpoolEmailStatus::STATUS_SENDING);
@@ -204,7 +205,7 @@ class DoctrineSpool extends \Swift_ConfigurableSpool
      *
      * @return int The count
      */
-    protected function sendEmail(Swift_Transport $transport, SpoolEmailInterface $email, &$failedRecipients)
+    protected function sendEmail(Swift_Transport $transport, SpoolEmailInterface $email, &$failedRecipients): int
     {
         $count = 0;
 
@@ -227,6 +228,8 @@ class DoctrineSpool extends \Swift_ConfigurableSpool
      * Update and flush the spool email.
      *
      * @param SpoolEmailInterface $email The spool email
+     *
+     * @throws
      */
     protected function flushEmail(SpoolEmailInterface $email): void
     {

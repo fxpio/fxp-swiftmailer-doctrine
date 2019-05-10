@@ -52,8 +52,12 @@ trait SpoolEmailTrait
 
     /**
      * @see SpoolEmailInterface::setMessage()
+     *
+     * @param \Swift_Mime_SimpleMessage $message
+     *
+     * @return static
      */
-    public function setMessage(\Swift_Mime_SimpleMessage $message): SpoolEmailInterface
+    public function setMessage(\Swift_Mime_SimpleMessage $message): self
     {
         $this->message = serialize($message);
 
@@ -79,11 +83,11 @@ trait SpoolEmailTrait
     /**
      * @see SpoolEmailInterface::setSentAt()
      *
-     * @param mixed $sentAt
+     * @param \DateTime $sentAt
      *
-     * @return SpoolEmailInterface
+     * @return static
      */
-    public function setSentAt(?\DateTime $sentAt): SpoolEmailInterface
+    public function setSentAt(?\DateTime $sentAt): self
     {
         $this->sentAt = $sentAt;
 
@@ -95,9 +99,9 @@ trait SpoolEmailTrait
      *
      * @param mixed $status
      *
-     * @return SpoolEmailInterface
+     * @return static
      */
-    public function setStatus(int $status): SpoolEmailInterface
+    public function setStatus(int $status): self
     {
         $this->status = $status;
         $this->setStatusMessage(null);
@@ -118,9 +122,9 @@ trait SpoolEmailTrait
      *
      * @param null|string $message
      *
-     * @return SpoolEmailInterface
+     * @return static
      */
-    public function setStatusMessage(?string $message): SpoolEmailInterface
+    public function setStatusMessage(?string $message): self
     {
         $this->statusMessage = $message;
 
