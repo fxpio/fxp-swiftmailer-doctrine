@@ -13,6 +13,7 @@ namespace Fxp\Component\SwiftmailerDoctrine\Tests\Entity;
 
 use Fxp\Component\SwiftmailerDoctrine\SpoolEmailStatus;
 use Fxp\Component\SwiftmailerDoctrine\Tests\Fixtures\Entity\SpoolEmail;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -62,7 +63,7 @@ final class SpoolEmailTraitTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Swift_Mime_SimpleMessage
+     * @return MockObject|\Swift_Mime_SimpleMessage
      */
     protected function createSwiftMessage()
     {

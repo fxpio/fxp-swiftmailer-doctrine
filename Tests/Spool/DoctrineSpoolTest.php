@@ -15,6 +15,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 use Fxp\Component\SwiftmailerDoctrine\Spool\DoctrineSpool;
 use Fxp\Component\SwiftmailerDoctrine\SpoolEmailStatus;
 use Fxp\Component\SwiftmailerDoctrine\Tests\Fixtures\Entity\SpoolEmail;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -31,7 +32,7 @@ final class DoctrineSpoolTest extends TestCase
         $this->expectException(\Fxp\Component\SwiftmailerDoctrine\Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('The "stdClass" class does not extend "Fxp\\Component\\SwiftmailerDoctrine\\Model\\SpoolEmailInterface');
 
-        /** @var ManagerRegistry|\PHPUnit_Framework_MockObject_MockObject $registry */
+        /** @var ManagerRegistry|MockObject $registry */
         $registry = $this->getMockBuilder('Doctrine\Common\Persistence\ManagerRegistry')->getMock();
 
         new DoctrineSpool($registry, 'stdClass');
@@ -49,7 +50,7 @@ final class DoctrineSpoolTest extends TestCase
             ->will($this->returnValue($repo))
         ;
 
-        /** @var ManagerRegistry|\PHPUnit_Framework_MockObject_MockObject $registry */
+        /** @var ManagerRegistry|MockObject $registry */
         $registry = $this->getMockBuilder('Doctrine\Common\Persistence\ManagerRegistry')->getMock();
         $registry->expects($this->any())
             ->method('getManagerForClass')
@@ -85,7 +86,7 @@ final class DoctrineSpoolTest extends TestCase
     public function testFlushQueueEmpty(): void
     {
         $failedRecipients = [];
-        /** @var \PHPUnit_Framework_MockObject_MockObject|\Swift_Transport $transport */
+        /** @var MockObject|\Swift_Transport $transport */
         $transport = $this->getMockBuilder('Swift_Transport')
             ->disableOriginalConstructor()
             ->getMock()
@@ -98,7 +99,7 @@ final class DoctrineSpoolTest extends TestCase
     public function testFlushQueueFailed(): void
     {
         $failedRecipients = [];
-        /** @var \PHPUnit_Framework_MockObject_MockObject|\Swift_Transport $transport */
+        /** @var MockObject|\Swift_Transport $transport */
         $transport = $this->getMockBuilder('Swift_Transport')
             ->disableOriginalConstructor()
             ->getMock()
@@ -118,7 +119,7 @@ final class DoctrineSpoolTest extends TestCase
     public function testFlushQueueFailedException(): void
     {
         $failedRecipients = [];
-        /** @var \PHPUnit_Framework_MockObject_MockObject|\Swift_Transport $transport */
+        /** @var MockObject|\Swift_Transport $transport */
         $transport = $this->getMockBuilder('Swift_Transport')
             ->disableOriginalConstructor()
             ->getMock()
@@ -143,7 +144,7 @@ final class DoctrineSpoolTest extends TestCase
     public function testFlushQueueSuccess(): void
     {
         $failedRecipients = [];
-        /** @var \PHPUnit_Framework_MockObject_MockObject|\Swift_Transport $transport */
+        /** @var MockObject|\Swift_Transport $transport */
         $transport = $this->getMockBuilder('Swift_Transport')
             ->disableOriginalConstructor()
             ->getMock()
@@ -168,7 +169,7 @@ final class DoctrineSpoolTest extends TestCase
     public function testFlushQueueTimeout(): void
     {
         $failedRecipients = [];
-        /** @var \PHPUnit_Framework_MockObject_MockObject|\Swift_Transport $transport */
+        /** @var MockObject|\Swift_Transport $transport */
         $transport = $this->getMockBuilder('Swift_Transport')
             ->disableOriginalConstructor()
             ->getMock()
@@ -232,7 +233,7 @@ final class DoctrineSpoolTest extends TestCase
             ->will($this->returnValue($repo))
         ;
 
-        /** @var ManagerRegistry|\PHPUnit_Framework_MockObject_MockObject $registry */
+        /** @var ManagerRegistry|MockObject $registry */
         $registry = $this->getMockBuilder('Doctrine\Common\Persistence\ManagerRegistry')->getMock();
         $registry->expects($this->any())
             ->method('getManagerForClass')

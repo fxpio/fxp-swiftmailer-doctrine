@@ -13,6 +13,7 @@ namespace Fxp\Component\SwiftmailerDoctrine\Tests\Entity;
 
 use Fxp\Component\SwiftmailerDoctrine\Model\Repository\SpoolEmailRepositoryInterface;
 use Fxp\Component\SwiftmailerDoctrine\Tests\Fixtures\Repository\SpoolEmailRepository;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -26,7 +27,7 @@ final class SpoolEmailRepositoryTraitTest extends TestCase
 {
     public function testFindEmailsToSend(): void
     {
-        /** @var \PHPUnit_Framework_MockObject_MockObject|SpoolEmailRepositoryInterface $repo */
+        /** @var MockObject|SpoolEmailRepositoryInterface $repo */
         $repo = $this->getMockBuilder(SpoolEmailRepository::class)
             ->disableOriginalConstructor()
             ->setMethods(['createQueryBuilder'])
@@ -74,7 +75,7 @@ final class SpoolEmailRepositoryTraitTest extends TestCase
 
     public function testRecover(): void
     {
-        /** @var \PHPUnit_Framework_MockObject_MockObject|SpoolEmailRepositoryInterface $repo */
+        /** @var MockObject|SpoolEmailRepositoryInterface $repo */
         $repo = $this->getMockBuilder(SpoolEmailRepository::class)
             ->disableOriginalConstructor()
             ->setMethods(['getEntityManager', 'createQueryBuilder'])
